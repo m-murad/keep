@@ -12,6 +12,9 @@ import com.murad.jboss.keep.models.Task;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by murad on 17/11/17.
  */
@@ -49,18 +52,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     class TaskAdapterViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
 
-        private TextView taskTitle;
-        private TextView taskDescription;
-        private TextView taskPriority;
-        private TextView taskDueDate;
+        @BindView(R.id.item_task_title) TextView taskTitle;
+        @BindView(R.id.item_task_description) TextView taskDescription;
+        @BindView(R.id.item_task_priority) TextView taskPriority;
+        @BindView(R.id.item_task_duedate) TextView taskDueDate;
 
-        public TaskAdapterViewHolder(View itemView) {
+        private TaskAdapterViewHolder(View itemView) {
             super(itemView);
 
-            taskTitle = itemView.findViewById(R.id.item_task_title);
-            taskDescription = itemView.findViewById(R.id.item_task_description);
-            taskPriority = itemView.findViewById(R.id.item_task_priority);
-            taskDueDate = itemView.findViewById(R.id.item_task_duedate);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override

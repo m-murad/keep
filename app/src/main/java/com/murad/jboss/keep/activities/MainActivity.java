@@ -1,7 +1,6 @@
 package com.murad.jboss.keep.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -14,10 +13,15 @@ import com.murad.jboss.keep.models.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
-    private RecyclerView recyclerView;
+    @BindView(R.id.tasks_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
     private TaskAdapter taskAdapter;
     private List<Task> tasks;
 
@@ -25,11 +29,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        fab = findViewById(R.id.fab);
-        recyclerView = findViewById(R.id.tasks_recycler_view);
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         tasks = new ArrayList<>();
         taskAdapter = new TaskAdapter(tasks);
@@ -38,5 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(taskAdapter);
+    }
+
+    @OnClick(R.id.fab)
+    public void addTask(){
+        // TODO: Add a task
     }
 }
