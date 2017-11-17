@@ -47,6 +47,9 @@ public class Task implements Parcelable{
         this.dueDate = dueDate;
     }
 
+    public Task(){
+    }
+
     protected Task(Parcel in) {
         title = in.readString();
         task = in.readString();
