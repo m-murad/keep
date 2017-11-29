@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Keep</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string-array name="priority">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
 </resources>
