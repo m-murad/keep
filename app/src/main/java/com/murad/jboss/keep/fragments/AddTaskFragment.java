@@ -17,12 +17,16 @@ import com.murad.jboss.keep.models.Task;
  */
 public class AddTaskFragment extends DialogFragment {
 
+    private static Task currentTask;
+    private static Integer currentIndex;
 
     public AddTaskFragment() {
         // Required empty public constructor
     }
 
     public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index) {
+        currentTask = task;
+        currentIndex = index;
         return new AddTaskFragment();
     }
 
