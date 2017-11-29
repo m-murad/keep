@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class AddTaskFragment extends DialogFragment {
         final Calendar calendar = Calendar.getInstance();
         todaysDate = taskDueDatePicker.getDayOfMonth() + "-" + (taskDueDatePicker.getMonth() + 1) + "-" + taskDueDatePicker.getYear();
         taskDueDate = todaysDate;
-        taskDueDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), new DatePicker.OnDateChangedListener() {
+        taskDueDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 taskDueDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
