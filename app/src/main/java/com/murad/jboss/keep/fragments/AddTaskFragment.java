@@ -15,12 +15,12 @@ import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.models.Task;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import butterknife.ButterKnife;
 
@@ -31,13 +31,15 @@ public class AddTaskFragment extends DialogFragment {
 
     private static Task currentTask;
     private static Integer currentIndex;
-    private String taskDueDate;
-    private String todayDate;
+    private Long taskDueDate;
+    private Long todayDate;
     private String fragmentTitle;
+    private Calendar calendar;
 
     private EditText taskTitle;
     private EditText taskDescription;
-    private Spinner prioritySpinner;
+    private Spinner taskPrioritySpinner;
+    private DatePicker taskDueDatePicker;
 
     public AddTaskFragment() {
         // Required empty public constructor
@@ -67,17 +69,27 @@ public class AddTaskFragment extends DialogFragment {
 
         taskTitle = ButterKnife.findById(dialog, R.id.task_title_et);
         taskDescription = ButterKnife.findById(dialog, R.id.task_description_et);
-        DatePicker taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
+        taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
         taskDueDatePicker.setMinDate(System.currentTimeMillis() - 1000);
-        prioritySpinner = ButterKnife.findById(dialog, R.id.task_priority_spinner);
+        taskPrioritySpinner = ButterKnife.findById(dialog, R.id.task_priority_spinner);
 
-        final Calendar calendar = Calendar.getInstance();
-        todayDate = taskDueDatePicker.getDayOfMonth() + "-" + (taskDueDatePicker.getMonth() + 1) + "-" + taskDueDatePicker.getYear();
+        calendar = Calendar.getInstance();
+        todayDate = calendar.getTime().getTime();
         taskDueDate = todayDate;
+
+        if (currentTask != null) {
+            taskTitle.setText(currentTask.getTitle());
+            taskDescription.setText(currentTask.getTaskDescription());
+            taskPrioritySpinner.setSelection(currentTask.getPriority());
+            taskDueDate = currentTask.getDueDate();
+        }
+
+        calendar.setTimeInMillis(taskDueDate);
         taskDueDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                taskDueDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                Calendar calendar = new GregorianCalendar(year, monthOfYear + 1, dayOfMonth);
+                taskDueDate = calendar.getTimeInMillis();
             }
         });
 
@@ -86,21 +98,19 @@ public class AddTaskFragment extends DialogFragment {
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if ("".equals(taskTitle.getText().toString().trim())) {
-                            Toast.makeText(getContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
-                            return;
+                        if (currentTask != null) {
+                            currentTask.setTitle(taskTitle.getText().toString().trim());
+                            currentTask.setTaskDescription(taskDescription.getText().toString().trim());
+                            currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
+                            currentTask.setDueDate(taskDueDate);
+                        } else {
+                            currentTask = new Task();
+                            currentTask.setCreatedOn(todayDate);
+                            currentTask.setTitle(taskTitle.getText().toString().trim());
+                            currentTask.setTaskDescription(taskDescription.getText().toString().trim());
+                            currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
+                            currentTask.setDueDate(taskDueDate);
                         }
-                        if ("".equals(taskDescription.getText().toString().trim())) {
-                            Toast.makeText(getContext(), "Task cannot be empty", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        currentTask = new Task();
-                        currentTask.setCreatedOn(todayDate);
-                        currentTask.setTitle(taskTitle.getText().toString().trim());
-                        currentTask.setTaskDescription(taskDescription.getText().toString().trim());
-                        currentTask.setPriority(prioritySpinner.getSelectedItemPosition());
-                        currentTask.setDueDate(taskDueDate);
-
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

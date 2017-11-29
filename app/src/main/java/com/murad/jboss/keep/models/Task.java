@@ -12,8 +12,8 @@ public class Task implements Parcelable{
     private String title;
     private String taskDescription;
     private int priority;
-    private String createdOn;
-    private String dueDate;
+    private Long createdOn;
+    private Long dueDate;
 
     public String getTitle() {
         return title;
@@ -24,10 +24,10 @@ public class Task implements Parcelable{
     public int getPriority() {
         return priority;
     }
-    public String getCreatedOn() {
+    public Long getCreatedOn() {
         return createdOn;
     }
-    public String getDueDate() {
+    public Long getDueDate() {
         return dueDate;
     }
 
@@ -40,10 +40,10 @@ public class Task implements Parcelable{
     public void setPriority(int priority) {
         this.priority = priority;
     }
-    public void setCreatedOn(String createdOn) {
+    public void setCreatedOn(Long createdOn) {
         this.createdOn = createdOn;
     }
-    public void setDueDate(String dueDate) {
+    public void setDueDate(Long dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -54,8 +54,8 @@ public class Task implements Parcelable{
         title = in.readString();
         taskDescription = in.readString();
         priority = in.readInt();
-        createdOn = in.readString();
-        dueDate = in.readString();
+        createdOn = in.readLong();
+        dueDate = in.readLong();
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -80,7 +80,7 @@ public class Task implements Parcelable{
         dest.writeString(title);
         dest.writeString(taskDescription);
         dest.writeInt(priority);
-        dest.writeString(createdOn);
-        dest.writeString(dueDate);
+        dest.writeLong(createdOn);
+        dest.writeLong(dueDate);
     }
 }
