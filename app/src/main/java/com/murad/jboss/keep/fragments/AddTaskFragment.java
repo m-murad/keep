@@ -31,8 +31,8 @@ public class AddTaskFragment extends DialogFragment {
 
     private static Task currentTask;
     private static Integer currentIndex;
-    private String taskDate, todaysDate;
-    private String taskCreatedOn;
+    private String taskDueDate;
+    private String todaysDate;
 
     private EditText taskTitle;
     private EditText taskDescription;
@@ -65,20 +65,21 @@ public class AddTaskFragment extends DialogFragment {
         taskTitle = ButterKnife.findById(dialog, R.id.task_title_et);
         taskDescription = ButterKnife.findById(dialog, R.id.task_description_et);
         DatePicker taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
+        taskDueDatePicker.setMinDate(System.currentTimeMillis() - 1000);
         prioritySpinner = ButterKnife.findById(dialog, R.id.task_priority_spinner);
 
         final Calendar calendar = Calendar.getInstance();
         todaysDate = taskDueDatePicker.getDayOfMonth() + "-" + (taskDueDatePicker.getMonth() + 1) + "-" + taskDueDatePicker.getYear();
-        taskDate = todaysDate;
+        taskDueDate = todaysDate;
         taskDueDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                taskDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                taskDueDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
             }
         });
 
         return new AlertDialog.Builder(getContext())
-                .setTitle("Add a Task")
+                .setTitle("Add task")
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -95,7 +96,7 @@ public class AddTaskFragment extends DialogFragment {
                         currentTask.setTitle(taskTitle.getText().toString().trim());
                         currentTask.setTaskDescription(taskDescription.getText().toString().trim());
                         currentTask.setPriority(prioritySpinner.getSelectedItemPosition());
-                        currentTask.setDueDate(taskDate);
+                        currentTask.setDueDate(taskDueDate);
 
                     }
                 })
