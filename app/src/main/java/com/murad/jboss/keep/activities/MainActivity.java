@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         tasks = new ArrayList<>();
-        taskAdapter = new TaskAdapter(tasks);
+        taskAdapter = new TaskAdapter(this, tasks);
 
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 

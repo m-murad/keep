@@ -1,6 +1,7 @@
 package com.murad.jboss.keep.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.murad.jboss.keep.R;
+import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
 
 import java.util.List;
@@ -24,7 +26,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     private Context context;
     private List<Task> tasks;
 
-    public TaskAdapter(List<Task> tasks) {
+    public TaskAdapter(Context context, List<Task> tasks) {
+        this.context = context;
         this.tasks = tasks;
     }
 
@@ -59,11 +62,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            // TODO: Do something with task.
+            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition())
+                    .show(((FragmentActivity)context).getSupportFragmentManager(), "EditTask");
         }
     }
 }
