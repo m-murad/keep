@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class Task implements Parcelable{
 
     private String title;
-    private String task;
+    private String taskDescription;
     private int priority;
     private String createdOn;
     private String dueDate;
@@ -18,8 +18,8 @@ public class Task implements Parcelable{
     public String getTitle() {
         return title;
     }
-    public String getTask() {
-        return task;
+    public String getTaskDescription() {
+        return taskDescription;
     }
     public int getPriority() {
         return priority;
@@ -34,8 +34,8 @@ public class Task implements Parcelable{
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setTask(String task) {
-        this.task = task;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
     public void setPriority(int priority) {
         this.priority = priority;
@@ -52,7 +52,7 @@ public class Task implements Parcelable{
 
     protected Task(Parcel in) {
         title = in.readString();
-        task = in.readString();
+        taskDescription = in.readString();
         priority = in.readInt();
         createdOn = in.readString();
         dueDate = in.readString();
@@ -78,7 +78,7 @@ public class Task implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeString(task);
+        dest.writeString(taskDescription);
         dest.writeInt(priority);
         dest.writeString(createdOn);
         dest.writeString(dueDate);
