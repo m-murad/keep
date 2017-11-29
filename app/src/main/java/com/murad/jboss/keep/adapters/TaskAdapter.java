@@ -2,6 +2,8 @@ package com.murad.jboss.keep.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     public void onBindViewHolder(TaskAdapterViewHolder holder, int position) {
         Task task = tasks.get(position);
 
+        switch (task.getPriority()) {
+            case 0:
+                holder.taskItem.setBackgroundColor(ContextCompat.getColor(context, R.color.priorityHigh));
+                break;
+            case 1:
+                holder.taskItem.setBackgroundColor(ContextCompat.getColor(context, R.color.priorityMedium));
+                break;
+            case 2:
+                holder.taskItem.setBackgroundColor(ContextCompat.getColor(context, R.color.priorityLow));
+                break;
+        }
         holder.taskTitle.setText(task.getTitle());
         holder.taskDescription.setText(task.getTaskDescription());
         holder.taskDueDate.setText(task.getDueDate().toString());
@@ -53,6 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     class TaskAdapterViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
 
+        @BindView(R.id.single_list_item) CardView taskItem;
         @BindView(R.id.item_task_title) TextView taskTitle;
         @BindView(R.id.item_task_description) TextView taskDescription;
         @BindView(R.id.item_task_duedate) TextView taskDueDate;
