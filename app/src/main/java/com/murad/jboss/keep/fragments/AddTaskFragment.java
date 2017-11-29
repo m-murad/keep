@@ -33,6 +33,7 @@ public class AddTaskFragment extends DialogFragment {
     private static Integer currentIndex;
     private String taskDueDate;
     private String todayDate;
+    private String fragmentTitle;
 
     private EditText taskTitle;
     private EditText taskDescription;
@@ -62,6 +63,8 @@ public class AddTaskFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View dialog = LayoutInflater.from(getContext()).inflate(R.layout.fragment_add_task, null);
 
+        setTitle();
+
         taskTitle = ButterKnife.findById(dialog, R.id.task_title_et);
         taskDescription = ButterKnife.findById(dialog, R.id.task_description_et);
         DatePicker taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
@@ -79,7 +82,7 @@ public class AddTaskFragment extends DialogFragment {
         });
 
         return new AlertDialog.Builder(getContext())
-                .setTitle("Add task")
+                .setTitle(fragmentTitle)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -108,5 +111,13 @@ public class AddTaskFragment extends DialogFragment {
                 })
                 .setView(dialog)
                 .create();
+    }
+
+    private void setTitle() {
+        if ("addTask".equals(getTag())) {
+            fragmentTitle = "Add task";
+        } else if ("editTask".equals(getTag())) {
+            fragmentTitle = "Edit task";
+        }
     }
 }
