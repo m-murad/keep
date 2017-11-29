@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.adapters.TaskAdapter;
+import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
 
 import java.util.ArrayList;
@@ -45,6 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void addTask(){
-        // TODO: Add a task
+        AddTaskFragment.getInstance(null, null).show(getSupportFragmentManager(), "AddTask");
     }
 }
