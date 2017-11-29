@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:maxLength="52"
+                android:singleLine="true"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="18sp" />
         </android.support.design.widget.TextInputLayout>
