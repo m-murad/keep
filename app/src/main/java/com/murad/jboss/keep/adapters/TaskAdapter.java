@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by murad on 17/11/17.
  */
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterViewHolder>{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterViewHolder> {
 
     private Context context;
     private List<Task> tasks;
@@ -41,7 +41,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
         holder.taskTitle.setText(task.getTitle());
         holder.taskDescription.setText(task.getTask());
         holder.taskTitle.setText(task.getTitle());
-        holder.taskPriority.setText(String.valueOf(task.getPriority()));
         holder.taskDueDate.setText(task.getDueDate());
     }
 
@@ -54,7 +53,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
         @BindView(R.id.item_task_title) TextView taskTitle;
         @BindView(R.id.item_task_description) TextView taskDescription;
-        @BindView(R.id.item_task_priority) TextView taskPriority;
         @BindView(R.id.item_task_duedate) TextView taskDueDate;
 
         private TaskAdapterViewHolder(View itemView) {
