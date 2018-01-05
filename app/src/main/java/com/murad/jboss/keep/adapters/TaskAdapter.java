@@ -1,6 +1,8 @@
 package com.murad.jboss.keep.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +17,7 @@ import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
+import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
 import java.util.List;
 
@@ -29,13 +32,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     private Context context;
     private List<Task> tasks;
+    private TaskViewModel taskViewModel;
     private View view;
-    private TaskRepository taskRepository;
 
-    public TaskAdapter(Context context, List<Task> tasks, TaskRepository taskRepository) {
+    public TaskAdapter(@NonNull Context context, TaskViewModel taskViewModel) {
         this.context = context;
+        this.taskViewModel = taskViewModel;
+    }
+
+    public void setTasks(@Nullable List<Task> tasks) {
         this.tasks = tasks;
-        this.taskRepository = taskRepository;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,6 +73,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     @Override
     public int getItemCount() {
+        if (tasks == null){
+            return 0;
+        }
         return tasks.size();
     }
 
@@ -85,7 +95,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
         @Override
         public void onClick(View v) {
-            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition(), taskRepository)
+            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition(), taskViewModel)
                     .show(((FragmentActivity)context).getSupportFragmentManager(), "editTask");
         }
     }
@@ -93,8 +103,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     public void deleteTask(int position) {
         final int currentPosition = position;
         final Task removedTask = tasks.get(position);
+        taskViewModel.delete(removedTask);
         tasks.remove(position);
-        taskRepository.delete(removedTask);
         this.notifyItemRemoved(position);
         Snackbar.make(view, "Task removed", Snackbar.LENGTH_SHORT)
                 .setAction("Undo", new View.OnClickListener() {
@@ -102,6 +112,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
             public void onClick(View v) {
                 tasks.add(currentPosition, removedTask);
                 notifyItemInserted(currentPosition);
+                taskViewModel.insert(removedTask);
             }
         }).show();
     }
