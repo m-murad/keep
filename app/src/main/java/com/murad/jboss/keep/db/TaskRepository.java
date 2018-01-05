@@ -1,6 +1,7 @@
 package com.murad.jboss.keep.db;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.murad.jboss.keep.models.Task;
@@ -14,7 +15,7 @@ import java.util.List;
 public class TaskRepository {
 
     private TaskDao mTaskDao;
-    private List<Task> mTasks;
+    private LiveData<List<Task>> mTasks;
 
     public TaskRepository(Application application) {
         TaskDatabase taskDatabase = TaskDatabase.getDatabase(application);
@@ -22,7 +23,7 @@ public class TaskRepository {
         mTasks = mTaskDao.getAllTasks();
     }
 
-    public List<Task> getAllTasks() {
+    public LiveData<List<Task>> getAllTasks() {
         return mTasks;
     }
 
