@@ -1,10 +1,12 @@
 package com.murad.jboss.keep.adapters;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     private Context context;
     private List<Task> tasks;
+    private View view;
 
     public TaskAdapter(Context context, List<Task> tasks) {
         this.context = context;
@@ -35,7 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     @Override
     public TaskAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new TaskAdapterViewHolder(view);
     }
 
@@ -86,8 +89,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     }
 
     public void deleteTask(int position) {
+        final int currentPosition = position;
+        final Task removedTask = tasks.get(position);
         tasks.remove(position);
         this.notifyItemRemoved(position);
-
+        Snackbar.make(view, "Task removed", Snackbar.LENGTH_SHORT)
+                .setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tasks.add(currentPosition, removedTask);
+                notifyItemInserted(currentPosition);
+            }
+        }).show();
     }
 }
