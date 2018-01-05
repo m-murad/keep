@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
 
 import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.adapters.TaskAdapter;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
+import com.murad.jboss.keep.helpers.TouchHelper;
 import com.murad.jboss.keep.models.Task;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TaskAdapter taskAdapter;
     private List<Task> tasks;
+    private ItemTouchHelper.Callback touchCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         tasks = new ArrayList<>();
         taskAdapter = new TaskAdapter(this, tasks);
+        touchCallback = new TouchHelper(taskAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(touchCallback);
+        touchHelper.attachToRecyclerView(recyclerView);
+
 
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 

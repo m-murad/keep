@@ -84,4 +84,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
                     .show(((FragmentActivity)context).getSupportFragmentManager(), "editTask");
         }
     }
+
+    public void deleteTask(int position) {
+        tasks.remove(position);
+        this.notifyItemRemoved(position);
+
+    }
 }
