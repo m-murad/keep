@@ -1,5 +1,6 @@
 package com.murad.jboss.keep.db;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -18,14 +19,14 @@ import java.util.List;
 public interface TaskDao {
 
     @Query("SELECT * FROM task")
-    public List<Task> getAllTasks();
+    LiveData<List<Task>> getAllTasks();
 
     @Insert
-    public void insertTask(Task task);
+    void insertTask(Task task);
 
     @Update
-    public void updateTask(Task task);
+    void updateTask(Task task);
 
     @Delete
-    public void deleteTask(Task task);
+    void deleteTask(Task task);
 }
