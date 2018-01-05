@@ -22,11 +22,12 @@ public abstract class TaskDatabase extends RoomDatabase {
             synchronized (TaskDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
-                            TaskDatabase.class, "task_database").build();
+                            TaskDatabase.class, "task_database")
+                            .allowMainThreadQueries()
+                            .build();
                 }
             }
         }
         return instance;
     }
-
 }
