@@ -21,11 +21,11 @@ public interface TaskDao {
     public List<Task> getAllTasks();
 
     @Insert
-    public void insertTask(Task... tasks);
+    public void insertTask(Task task);
 
     @Update
-    public void updateUsers(Task... tasks);
+    public void updateTask(Task task);
 
     @Delete
-    public void deleteUsers(Task... tasks);
+    public void deleteTask(Task task);
 }
