@@ -14,7 +14,7 @@ import com.murad.jboss.keep.models.Task;
 @Database(entities = {Task.class}, version = 1)
 public abstract class TaskDatabase extends RoomDatabase {
 
-    public abstract TaskDao wordDao();
+    public abstract TaskDao taskDao();
     private static TaskDatabase instance;
 
     static TaskDatabase getDatabase(final Context context) {
