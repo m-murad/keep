@@ -16,13 +16,13 @@ public class TaskRepository {
     private TaskDao mTaskDao;
     private List<Task> mTasks;
 
-    TaskRepository(Application application) {
-        TaskDatabase db = TaskDatabase.getDatabase(application);
-        mTaskDao = db.taskDao();
+    public TaskRepository(Application application) {
+        TaskDatabase taskDatabase = TaskDatabase.getDatabase(application);
+        mTaskDao = taskDatabase.taskDao();
         mTasks = mTaskDao.getAllTasks();
     }
 
-    List<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return mTasks;
     }
 
@@ -41,6 +41,45 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(final Task... params) {
             mAsyncTaskDao.insertTask(params[0]);
+            return null;
+        }
+    }
+
+
+    public void update (Task task) {
+        new updateAsyncTask(mTaskDao).execute(task);
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Task, Void, Void> {
+
+        private TaskDao mAsyncTaskDao;
+
+        updateAsyncTask(TaskDao taskDao) {
+            mAsyncTaskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(final Task... params) {
+            mAsyncTaskDao.updateTask(params[0]);
+            return null;
+        }
+    }
+
+    public void delete (Task task) {
+        new deleteAsyncTask(mTaskDao).execute(task);
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Task, Void, Void> {
+
+        private TaskDao mAsyncTaskDao;
+
+        deleteAsyncTask(TaskDao taskDao) {
+            mAsyncTaskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(final Task... params) {
+            mAsyncTaskDao.deleteTask(params[0]);
             return null;
         }
     }

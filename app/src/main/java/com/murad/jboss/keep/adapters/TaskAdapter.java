@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.murad.jboss.keep.R;
+import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
 
@@ -30,10 +30,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     private Context context;
     private List<Task> tasks;
     private View view;
+    private TaskRepository taskRepository;
 
-    public TaskAdapter(Context context, List<Task> tasks) {
+    public TaskAdapter(Context context, List<Task> tasks, TaskRepository taskRepository) {
         this.context = context;
         this.tasks = tasks;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -83,7 +85,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
         @Override
         public void onClick(View v) {
-            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition())
+            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition(), taskRepository)
                     .show(((FragmentActivity)context).getSupportFragmentManager(), "editTask");
         }
     }
@@ -92,6 +94,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
         final int currentPosition = position;
         final Task removedTask = tasks.get(position);
         tasks.remove(position);
+        taskRepository.delete(removedTask);
         this.notifyItemRemoved(position);
         Snackbar.make(view, "Task removed", Snackbar.LENGTH_SHORT)
                 .setAction("Undo", new View.OnClickListener() {

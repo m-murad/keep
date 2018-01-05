@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.adapters.TaskAdapter;
+import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.helpers.TouchHelper;
 import com.murad.jboss.keep.models.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TaskAdapter taskAdapter;
     private List<Task> tasks;
     private ItemTouchHelper.Callback touchCallback;
+    private TaskRepository taskRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        tasks = new ArrayList<>();
-        taskAdapter = new TaskAdapter(this, tasks);
+        taskRepository = new TaskRepository(getApplication());
+        tasks = taskRepository.getAllTasks();
+        taskAdapter = new TaskAdapter(this, tasks, taskRepository);
         touchCallback = new TouchHelper(taskAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(touchCallback);
         touchHelper.attachToRecyclerView(recyclerView);
@@ -65,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @OnClick(R.id.fab)
     public void addTask(){
-        AddTaskFragment.getInstance(null, null).show(getSupportFragmentManager(), "addTask");
+        AddTaskFragment.getInstance(null, null, taskRepository).show(getSupportFragmentManager(), "addTask");
     }
 }

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.murad.jboss.keep.R;
+import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.models.Task;
 
 import java.util.Calendar;
@@ -35,6 +36,7 @@ public class AddTaskFragment extends DialogFragment {
     private Long todayDate;
     private String fragmentTitle;
     private Calendar calendar;
+    private static TaskRepository taskRepository;
 
     private EditText taskTitle;
     private EditText taskDescription;
@@ -45,9 +47,10 @@ public class AddTaskFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index) {
+    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index, @Nullable TaskRepository taskRepo) {
         currentTask = task;
         currentIndex = index;
+        taskRepository = taskRepo;
         return new AddTaskFragment();
     }
 
@@ -95,7 +98,7 @@ public class AddTaskFragment extends DialogFragment {
 
         return new AlertDialog.Builder(getContext())
                 .setTitle(fragmentTitle)
-                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (currentTask != null) {
@@ -103,6 +106,7 @@ public class AddTaskFragment extends DialogFragment {
                             currentTask.setTaskDescription(taskDescription.getText().toString().trim());
                             currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                             currentTask.setDueDate(taskDueDate);
+                            taskRepository.update(currentTask);
                         } else {
                             currentTask = new Task();
                             currentTask.setCreatedOn(todayDate);
@@ -110,6 +114,7 @@ public class AddTaskFragment extends DialogFragment {
                             currentTask.setTaskDescription(taskDescription.getText().toString().trim());
                             currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                             currentTask.setDueDate(taskDueDate);
+                            taskRepository.insert(currentTask);
                         }
                     }
                 })
