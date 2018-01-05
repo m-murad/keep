@@ -17,6 +17,7 @@ import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
+import com.murad.jboss.keep.utils.DateUtils;
 import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
         }
         holder.taskTitle.setText(task.getTitle());
         holder.taskDescription.setText(task.getTaskDescription());
-        holder.taskDueDate.setText(task.getDueDate().toString());
+        holder.taskDueDate.setText(DateUtils.getDate(String.valueOf(task.getDueDate())));
     }
 
     @Override
