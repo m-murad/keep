@@ -58,7 +58,6 @@ public class AddTaskFragment extends DialogFragment {
         return new AddTaskFragment(viewModel);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,7 +94,7 @@ public class AddTaskFragment extends DialogFragment {
         taskDueDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar calendar = new GregorianCalendar(year, monthOfYear + 1, dayOfMonth);
+                Calendar calendar = new GregorianCalendar(year, monthOfYear , dayOfMonth);
                 taskDueDate = calendar.getTimeInMillis();
             }
         });
