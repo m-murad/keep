@@ -1,20 +1,28 @@
 package com.murad.jboss.keep.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 /**
  * Created by murad on 17/11/17.
  */
-
+@Entity
 public class Task implements Parcelable{
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private String taskDescription;
     private int priority;
     private Long createdOn;
     private Long dueDate;
 
+    public int getId() {
+        return id;
+    }
     public String getTitle() {
         return title;
     }
@@ -31,6 +39,9 @@ public class Task implements Parcelable{
         return dueDate;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
@@ -51,6 +62,7 @@ public class Task implements Parcelable{
     }
 
     protected Task(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         taskDescription = in.readString();
         priority = in.readInt();
@@ -77,6 +89,7 @@ public class Task implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(taskDescription);
         dest.writeInt(priority);
