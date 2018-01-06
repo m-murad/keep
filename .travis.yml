@@ -1,7 +1,13 @@
 language: android
 sudo: required
 jdk: oraclejdk8
-cache: false
+
+cache:
+  directories:
+  - "${TRAVIS_BUILD_DIR}/android/gradle/caches/"
+  - "${TRAVIS_BUILD_DIR}/android/gradle/wrapper/dists/"
+  - "$HOME/android/.gradle/caches/"
+  - "$HOME/android/.gradle/wrapper/"
 
 android:
   components:
