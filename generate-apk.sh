@@ -35,6 +35,7 @@ cp $HOME/build/m-murad/keep/app/build/outputs/apk/release/app-release-unsigned.a
 # Add and commit the files
 git add -f app-debug.apk
 git add -f app-release-unsigned.apk
+git add .travis.yml
 git commit --message "Apk(s) update for build:$TRAVIS_BUILD_NUMBER"
 
 # Delete the branch name "apk"
