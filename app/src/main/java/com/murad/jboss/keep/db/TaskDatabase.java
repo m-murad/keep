@@ -11,7 +11,7 @@ import com.murad.jboss.keep.models.Task;
  * Created by murad on 05/01/18.
  */
 
-@Database(entities = {Task.class}, version = 1)
+@Database(entities = {Task.class}, version = 1, exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();

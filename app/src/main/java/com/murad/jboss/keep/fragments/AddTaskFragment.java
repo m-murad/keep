@@ -1,6 +1,7 @@
 package com.murad.jboss.keep.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -48,11 +49,12 @@ public class AddTaskFragment extends DialogFragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ValidFragment")
     public AddTaskFragment(TaskViewModel viewModel) {
         taskViewModel = viewModel;
     }
 
-    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index, TaskViewModel viewModel) {
+    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index, @NonNull TaskViewModel viewModel) {
         currentTask = task;
         currentIndex = index;
         return new AddTaskFragment(viewModel);
