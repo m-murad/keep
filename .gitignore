@@ -58,3 +58,8 @@ freeline_project_description.json
 
 # Mac Stuff
 .DS_Store
+
+# secret files
+secrets/google-api-key.json
+secrets/keystore.jks
+secrets/secrets.tar

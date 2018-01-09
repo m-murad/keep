@@ -12,9 +12,28 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     exit 0
 fi
 
+# Travis build triggered by a TAG
+if [ -n "$TRAVIS_TAG"  ]; then
+    echo "This is a TAG. Uploading apk to Google Play Store."
+    # Decrypt the secret files
+    cd $HOME/build/m-murad/keep/secrets
+    openssl aes-256-cbc -K $encrypted_b9019075c133_key -iv $encrypted_b9019075c133_iv -in secrets.tar.enc -out secrets.tar -d
+    tar xvf secrets.tar
+    cd $HOME/build/m-murad/keep
+    # Sign the apk using jarsigner
+    jarsigner -verbose -tsa http://timestamp.comodoca.com/rfc3161 -sigalg SHA1withRSA -digestalg SHA1 -keystore secrets/keystore.jks -storepass $PASSWORD -keypass $KEY_PASSWORD app/build/outputs/apk/release/app-release-unsigned.apk $ALIAS
+    # Align the apk using zipalign
+    ${ANDROID_HOME}/build-tools/26.0.2/zipalign -vfp 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/app-release-unsigned.apk
+    # Install fastlane
+    gem install fastlane
+    # Publish the apk on Google Play Store
+    fastlane supply --apk $HOME/build/m-murad/keep/app/build/outputs/apk/release/app-release-unsigned.apk --track rollout --rollout $TRAVIS_TAG --json_key secrets/google-api-key.json --package_name com.murad.jboss.keep
+    exit 0
+fi
+
 # Travis build triggered by commit to a branch other than master
 if [ "$TRAVIS_BRANCH" != "master" ]; then
-    echo "Not pushed to main branch. Skip apk upload."
+    echo "Not pushed to master branch. Skip apk upload."
     exit 0
 fi
 
