@@ -70,5 +70,5 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     # Force push to the apk branch
     git push origin apk --force --quiet> /dev/null
     # Upload the new debug apk to Appetize.io
-    curl https://$APPETIZE_API_KEY@api.appetize.io/v1/apps/$APPETIZE_APP_KEY -H 'Content-Type: application/json' -d '{"url":"https://github.com/m-murad/keep/blob/apk/app-debug.apk", "timeout": 30, "note": "Update for travis build:$TRAVIS_BUILD_NUMBER"}'
+    curl https://$APPETIZE_API_KEY@api.appetize.io/v1/apps/$APPETIZE_APP_KEY -H 'Content-Type: application/json' -d '{"url":"https://github.com/m-murad/keep/raw/apk/app-debug.apk"}' > /dev/null
 fi
