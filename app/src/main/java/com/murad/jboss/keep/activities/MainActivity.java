@@ -17,6 +17,7 @@ import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.adapters.TaskAdapter;
 import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
+import com.murad.jboss.keep.helpers.ItemOffsetDecorator;
 import com.murad.jboss.keep.helpers.TouchHelper;
 import com.murad.jboss.keep.models.Task;
 import com.murad.jboss.keep.viewmodels.TaskViewModel;
@@ -75,16 +76,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        ItemOffsetDecorator itemDecoration = new ItemOffsetDecorator(this, R.dimen.cardview_default_radius);
 
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapter(taskAdapter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     @OnClick(R.id.fab)
