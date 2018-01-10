@@ -62,11 +62,13 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     git add -f app-debug.apk
     git add -f app-release-unsigned.apk
     git add .travis.yml
-    git commit --message "Apk(s) update for build:$TRAVIS_BUILD_NUMBER"
+    git commit --message "Apk(s) update for travis build:$TRAVIS_BUILD_NUMBER"
     # Delete the branch name "apk"
     git branch -D apk
     # Rename the current branch from "temp" to "apk"
     git branch -m apk
     # Force push to the apk branch
     git push origin apk --force --quiet> /dev/null
+    # Upload the new debug apk to Appetize.io
+    curl https://$APPETIZE_API_KEY@api.appetize.io/v1/apps/$APPETIZE_APP_KEY -H 'Content-Type: application/json' -d '{"url":"https://github.com/m-murad/keep/blob/apk/app-debug.apk", "timeout": 30, "note": "Update for travis build:$TRAVIS_BUILD_NUMBER"}'
 fi
