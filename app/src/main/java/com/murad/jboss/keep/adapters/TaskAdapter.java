@@ -34,7 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
     private Context context;
     private List<Task> tasks;
     private TaskViewModel taskViewModel;
-    private View view;
+    private RecyclerView recyclerView;
 
     public TaskAdapter(@NonNull Context context, TaskViewModel taskViewModel) {
         this.context = context;
@@ -48,7 +48,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     @Override
     public TaskAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new TaskAdapterViewHolder(view);
     }
 
@@ -101,13 +101,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
         }
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        this.recyclerView = recyclerView;
+    }
+
     public void deleteTask(int position) {
         final int currentPosition = position;
         final Task removedTask = tasks.get(position);
         taskViewModel.delete(removedTask);
         tasks.remove(position);
         this.notifyItemRemoved(position);
-        Snackbar.make(view, "Task removed", Snackbar.LENGTH_SHORT)
+        Snackbar.make(recyclerView, "Task removed", Snackbar.LENGTH_SHORT)
                 .setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
