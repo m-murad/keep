@@ -15,7 +15,7 @@ public class Task implements Parcelable{
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private String taskDescription;
+    private String description;
     private int priority;
     private Long createdOn;
     private Long dueDate;
@@ -26,8 +26,8 @@ public class Task implements Parcelable{
     public String getTitle() {
         return title;
     }
-    public String getTaskDescription() {
-        return taskDescription;
+    public String getDescription() {
+        return description;
     }
     public int getPriority() {
         return priority;
@@ -45,8 +45,8 @@ public class Task implements Parcelable{
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
     public void setPriority(int priority) {
         this.priority = priority;
@@ -58,13 +58,13 @@ public class Task implements Parcelable{
         this.dueDate = dueDate;
     }
 
-    public Task(){
+    public Task() {
     }
 
     protected Task(Parcel in) {
         id = in.readInt();
         title = in.readString();
-        taskDescription = in.readString();
+        description = in.readString();
         priority = in.readInt();
         createdOn = in.readLong();
         dueDate = in.readLong();
@@ -91,7 +91,7 @@ public class Task implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(title);
-        dest.writeString(taskDescription);
+        dest.writeString(description);
         dest.writeInt(priority);
         dest.writeLong(createdOn);
         dest.writeLong(dueDate);

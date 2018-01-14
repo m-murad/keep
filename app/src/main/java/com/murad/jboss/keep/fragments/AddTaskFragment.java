@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.murad.jboss.keep.R;
-import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.models.Task;
 import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
@@ -87,7 +86,7 @@ public class AddTaskFragment extends DialogFragment {
 
         if (currentTask != null) {
             taskTitle.setText(currentTask.getTitle());
-            taskDescription.setText(currentTask.getTaskDescription());
+            taskDescription.setText(currentTask.getDescription());
             taskPrioritySpinner.setSelection(currentTask.getPriority());
             taskDueDate = currentTask.getDueDate();
         }
@@ -108,7 +107,7 @@ public class AddTaskFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (currentTask != null) {
                             currentTask.setTitle(taskTitle.getText().toString().trim());
-                            currentTask.setTaskDescription(taskDescription.getText().toString().trim());
+                            currentTask.setDescription(taskDescription.getText().toString().trim());
                             currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                             currentTask.setDueDate(taskDueDate);
                             taskViewModel.update(currentTask);
@@ -116,7 +115,7 @@ public class AddTaskFragment extends DialogFragment {
                             currentTask = new Task();
                             currentTask.setCreatedOn(todayDate);
                             currentTask.setTitle(taskTitle.getText().toString().trim());
-                            currentTask.setTaskDescription(taskDescription.getText().toString().trim());
+                            currentTask.setDescription(taskDescription.getText().toString().trim());
                             currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                             currentTask.setDueDate(taskDueDate);
                             taskViewModel.insert(currentTask);

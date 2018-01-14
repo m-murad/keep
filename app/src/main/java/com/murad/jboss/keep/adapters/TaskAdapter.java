@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.murad.jboss.keep.R;
-import com.murad.jboss.keep.db.TaskRepository;
 import com.murad.jboss.keep.fragments.AddTaskFragment;
 import com.murad.jboss.keep.models.Task;
 import com.murad.jboss.keep.utils.DateUtils;
@@ -68,7 +67,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
                 break;
         }
         holder.taskTitle.setText(task.getTitle());
-        holder.taskDescription.setText(task.getTaskDescription());
+        holder.taskDescription.setText(task.getDescription());
         holder.taskDueDate.setText(DateUtils.getDate(String.valueOf(task.getDueDate())));
     }
 
