@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,6 +128,20 @@ public class AddTaskFragment extends DialogFragment {
                 })
                 .setView(dialog)
                 .create();
+    }
+
+    private boolean taskValid() {
+        if (TextUtils.isEmpty(currentTask.getTitle())) {
+            taskTitle.requestFocus();
+            taskTitle.setError("Task title cannot be empty");
+            return false;
+        }
+        if (TextUtils.isEmpty(currentTask.getDescription())) {
+            taskDescription.requestFocus();
+            taskDescription.setError("Task description cannot be empty");
+            return false;
+        }
+        return true;
     }
 
     private void setTitle() {
