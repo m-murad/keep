@@ -95,7 +95,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
         @Override
         public void onClick(View v) {
-            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition(), taskViewModel)
+            AddTaskFragment.getInstance(tasks.get(getAdapterPosition()), getAdapterPosition())
                     .show(((FragmentActivity)context).getSupportFragmentManager(), "editTask");
         }
     }

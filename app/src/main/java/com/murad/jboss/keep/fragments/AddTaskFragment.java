@@ -1,8 +1,8 @@
 package com.murad.jboss.keep.fragments;
 
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,20 +48,17 @@ public class AddTaskFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    @SuppressLint("ValidFragment")
-    public AddTaskFragment(TaskViewModel viewModel) {
-        taskViewModel = viewModel;
-    }
-
-    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index, @NonNull TaskViewModel viewModel) {
+    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index) {
         currentTask = task;
         currentIndex = index;
-        return new AddTaskFragment(viewModel);
+        return new AddTaskFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+
         View view =  inflater.inflate(R.layout.fragment_add_task, container, false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return view;

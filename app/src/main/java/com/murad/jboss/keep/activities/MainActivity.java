@@ -57,13 +57,9 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper touchHelper = new ItemTouchHelper(touchCallback);
         touchHelper.attachToRecyclerView(recyclerView);
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
         taskViewModel.getTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(@Nullable final List<Task> tasks) {
-                // Update the cached copy of the words in the adapter.
                 if (tasks != null && tasks.size() == 0) {
                     recyclerView.setVisibility(View.INVISIBLE);
                     noTasks.setVisibility(View.VISIBLE);
@@ -85,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.fab)
-    public void addTask(){
-        AddTaskFragment.getInstance(null, null, taskViewModel).show(getSupportFragmentManager(), "addTask");
+    public void addTask() {
+        AddTaskFragment.getInstance(null, null).show(getSupportFragmentManager(), "addTask");
     }
 }
