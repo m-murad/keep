@@ -15,7 +15,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private Handler handler;
     private Runnable runnable;
-    private View decorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         Log.d(TAG, "onCreate");
 
-        decorView = getWindow().getDecorView();
+        View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

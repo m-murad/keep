@@ -36,17 +36,11 @@ public class AddTaskFragment extends DialogFragment {
     private Long taskDueDate;
     private Long todayDate;
     private String fragmentTitle;
-    private Calendar calendar;
     private TaskViewModel taskViewModel;
 
     private EditText taskTitle;
     private EditText taskDescription;
     private Spinner taskPrioritySpinner;
-    private DatePicker taskDueDatePicker;
-
-    public AddTaskFragment() {
-        // Required empty public constructor
-    }
 
     public static AddTaskFragment getInstance(@Nullable Task task) {
         currentTask = task;
@@ -72,11 +66,11 @@ public class AddTaskFragment extends DialogFragment {
 
         taskTitle = ButterKnife.findById(dialog, R.id.task_title_et);
         taskDescription = ButterKnife.findById(dialog, R.id.task_description_et);
-        taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
+        DatePicker taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
         taskDueDatePicker.setMinDate(System.currentTimeMillis() - 1000);
         taskPrioritySpinner = ButterKnife.findById(dialog, R.id.task_priority_spinner);
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         todayDate = calendar.getTime().getTime();
         taskDueDate = todayDate;
 
@@ -103,7 +97,7 @@ public class AddTaskFragment extends DialogFragment {
         addDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                // It will dismiss the dialog
             }
         });
 

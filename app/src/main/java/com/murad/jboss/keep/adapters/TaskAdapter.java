@@ -65,6 +65,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
             case 2:
                 holder.taskItem.setBackgroundColor(ContextCompat.getColor(context, R.color.priorityLow));
                 break;
+            default:
+                holder.taskItem.setBackgroundColor(ContextCompat.getColor(context, R.color.priorityMedium));
         }
         holder.taskTitle.setText(task.getTitle());
         holder.taskDescription.setText(task.getDescription());

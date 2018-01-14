@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.txt_no_tracks) TextView noTasks;
 
     private TaskAdapter taskAdapter;
-    private LiveData<List<Task>> tasks;
-    private ItemTouchHelper.Callback touchCallback;
-    private TaskRepository taskRepository;
-    private TaskViewModel taskViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-        taskRepository = new TaskRepository(getApplication());
-        tasks = taskRepository.getAllTasks();
+        TaskViewModel taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+        TaskRepository taskRepository = new TaskRepository(getApplication());
+        LiveData<List<Task>> tasks = taskRepository.getAllTasks();
         taskAdapter = new TaskAdapter(this, taskViewModel);
-        touchCallback = new TouchHelper(taskAdapter);
+        ItemTouchHelper.Callback touchCallback = new TouchHelper(taskAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(touchCallback);
         touchHelper.attachToRecyclerView(recyclerView);
 
@@ -70,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         ItemOffsetDecorator itemDecoration = new ItemOffsetDecorator(this, R.dimen.cardview_default_radius);
