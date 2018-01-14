@@ -98,36 +98,47 @@ public class AddTaskFragment extends DialogFragment {
             }
         });
 
-        return new AlertDialog.Builder(getContext())
-                .setTitle(fragmentTitle)
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (currentTask != null) {
-                            currentTask.setTitle(taskTitle.getText().toString().trim());
-                            currentTask.setDescription(taskDescription.getText().toString().trim());
-                            currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
-                            currentTask.setDueDate(taskDueDate);
-                            taskViewModel.update(currentTask);
-                        } else {
-                            currentTask = new Task();
-                            currentTask.setCreatedOn(todayDate);
-                            currentTask.setTitle(taskTitle.getText().toString().trim());
-                            currentTask.setDescription(taskDescription.getText().toString().trim());
-                            currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
-                            currentTask.setDueDate(taskDueDate);
-                            taskViewModel.insert(currentTask);
-                        }
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setView(dialog)
-                .create();
+        AlertDialog.Builder addDialogBuilder = new AlertDialog.Builder(getContext());
+        addDialogBuilder.setView(dialog);
+        addDialogBuilder.setTitle(fragmentTitle);
+        addDialogBuilder.setPositiveButton("Save", null);
+        addDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        return addDialogBuilder.create();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AlertDialog addDialog = (AlertDialog)getDialog();
+        addDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentTask != null) {
+                    currentTask.setTitle(taskTitle.getText().toString().trim());
+                    currentTask.setDescription(taskDescription.getText().toString().trim());
+                    currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
+                    currentTask.setDueDate(taskDueDate);
+                    taskViewModel.update(currentTask);
+                    dismiss();
+                } else {
+                    currentTask = new Task();
+                    currentTask.setCreatedOn(todayDate);
+                    currentTask.setTitle(taskTitle.getText().toString().trim());
+                    currentTask.setDescription(taskDescription.getText().toString().trim());
+                    currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
+                    currentTask.setDueDate(taskDueDate);
+                    taskViewModel.insert(currentTask);
+                    dismiss();
+                }
+            }
+        });
     }
 
     private boolean taskValid() {
