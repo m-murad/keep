@@ -61,7 +61,6 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     # Add and commit the files
     git add -f app-debug.apk
     git add -f app-release-unsigned.apk
-    git add .travis.yml
     git commit --message "Apk(s) update for travis build:$TRAVIS_BUILD_NUMBER"
     # Delete the branch name "apk"
     git branch -D apk
