@@ -82,6 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void addTask() {
-        AddTaskFragment.getInstance(null, null).show(getSupportFragmentManager(), "addTask");
+        AddTaskFragment.getInstance(null).show(getSupportFragmentManager(), "addTask");
     }
 }

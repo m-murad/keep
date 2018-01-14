@@ -33,7 +33,6 @@ import butterknife.ButterKnife;
 public class AddTaskFragment extends DialogFragment {
 
     private static Task currentTask;
-    private static Integer currentIndex;
     private Long taskDueDate;
     private Long todayDate;
     private String fragmentTitle;
@@ -49,9 +48,8 @@ public class AddTaskFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static AddTaskFragment getInstance(@Nullable Task task, @Nullable Integer index) {
+    public static AddTaskFragment getInstance(@Nullable Task task) {
         currentTask = task;
-        currentIndex = index;
         return new AddTaskFragment();
     }
 
