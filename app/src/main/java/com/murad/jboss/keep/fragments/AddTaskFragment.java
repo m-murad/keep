@@ -125,6 +125,7 @@ public class AddTaskFragment extends DialogFragment {
                     currentTask.setDescription(taskDescription.getText().toString().trim());
                     currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                     currentTask.setDueDate(taskDueDate);
+                    if (!taskValid()) return;
                     taskViewModel.update(currentTask);
                     dismiss();
                 } else {
@@ -134,6 +135,7 @@ public class AddTaskFragment extends DialogFragment {
                     currentTask.setDescription(taskDescription.getText().toString().trim());
                     currentTask.setPriority(taskPrioritySpinner.getSelectedItemPosition());
                     currentTask.setDueDate(taskDueDate);
+                    if (!taskValid()) return;
                     taskViewModel.insert(currentTask);
                     dismiss();
                 }
