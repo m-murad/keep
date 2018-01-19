@@ -27,61 +27,30 @@ public class TaskRepository {
         return mTasks;
     }
 
-    public void insert (Task task) {
-        new insertAsyncTask(mTaskDao).execute(task);
+    public void insert(final Task task) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mTaskDao.insertTask(task);
+            }
+        });
     }
 
-    private static class insertAsyncTask extends AsyncTask<Task, Void, Void> {
-
-        private TaskDao mAsyncTaskDao;
-
-        insertAsyncTask(TaskDao taskDao) {
-            mAsyncTaskDao = taskDao;
-        }
-
-        @Override
-        protected Void doInBackground(final Task... params) {
-            mAsyncTaskDao.insertTask(params[0]);
-            return null;
-        }
+    public void update(final Task task) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mTaskDao.updateTask(task);
+            }
+        });
     }
 
-
-    public void update (Task task) {
-        new updateAsyncTask(mTaskDao).execute(task);
-    }
-
-    private static class updateAsyncTask extends AsyncTask<Task, Void, Void> {
-
-        private TaskDao mAsyncTaskDao;
-
-        updateAsyncTask(TaskDao taskDao) {
-            mAsyncTaskDao = taskDao;
-        }
-
-        @Override
-        protected Void doInBackground(final Task... params) {
-            mAsyncTaskDao.updateTask(params[0]);
-            return null;
-        }
-    }
-
-    public void delete (Task task) {
-        new deleteAsyncTask(mTaskDao).execute(task);
-    }
-
-    private static class deleteAsyncTask extends AsyncTask<Task, Void, Void> {
-
-        private TaskDao mAsyncTaskDao;
-
-        deleteAsyncTask(TaskDao taskDao) {
-            mAsyncTaskDao = taskDao;
-        }
-
-        @Override
-        protected Void doInBackground(final Task... params) {
-            mAsyncTaskDao.deleteTask(params[0]);
-            return null;
-        }
+    public void delete(final Task task) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mTaskDao.deleteTask(task);
+            }
+        });
     }
 }
