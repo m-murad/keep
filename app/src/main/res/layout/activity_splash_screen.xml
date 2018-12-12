@@ -7,7 +7,7 @@
     android:background="#f5aa00"
     tools:context="com.murad.jboss.keep.activities.SplashScreenActivity">
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/splash_screen"/>

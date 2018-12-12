@@ -1,18 +1,19 @@
 package com.murad.jboss.keep.activities;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.murad.jboss.keep.R;
 import com.murad.jboss.keep.adapters.TaskAdapter;
 import com.murad.jboss.keep.db.TaskRepository;
@@ -24,15 +25,12 @@ import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.tasks_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.txt_no_tracks) TextView noTasks;
+    private RecyclerView recyclerView;
+    private Toolbar toolbar;
+    private TextView noTasks;
+    private FloatingActionButton floatingActionButton;
 
     private TaskAdapter taskAdapter;
 
@@ -41,7 +39,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
+        recyclerView = findViewById(R.id.tasks_recycler_view);
+        toolbar = findViewById(R.id.toolbar);
+        noTasks = findViewById(R.id.txt_no_tracks);
+        floatingActionButton = findViewById(R.id.fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddTaskFragment.getInstance(null).show(getSupportFragmentManager(), "addTask");
+            }
+        });
 
         setSupportActionBar(toolbar);
 
@@ -73,10 +81,5 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapter(taskAdapter);
-    }
-
-    @OnClick(R.id.fab)
-    public void addTask() {
-        AddTaskFragment.getInstance(null).show(getSupportFragmentManager(), "addTask");
     }
 }

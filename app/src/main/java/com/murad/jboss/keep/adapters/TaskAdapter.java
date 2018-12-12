@@ -1,13 +1,13 @@
 package com.murad.jboss.keep.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +20,6 @@ import com.murad.jboss.keep.utils.DateUtils;
 import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by murad on 17/11/17.
@@ -83,15 +80,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskAdapterVie
 
     class TaskAdapterViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
 
-        @BindView(R.id.single_list_item) CardView taskItem;
-        @BindView(R.id.item_task_title) TextView taskTitle;
-        @BindView(R.id.item_task_description) TextView taskDescription;
-        @BindView(R.id.item_task_duedate) TextView taskDueDate;
+        CardView taskItem;
+        TextView taskTitle;
+        TextView taskDescription;
+        TextView taskDueDate;
 
         private TaskAdapterViewHolder(View itemView) {
             super(itemView);
 
-            ButterKnife.bind(this, itemView);
+            taskItem = itemView.findViewById(R.id.single_list_item);
+            taskTitle = itemView.findViewById(R.id.item_task_title);
+            taskDescription = itemView.findViewById(R.id.item_task_description);
+            taskDueDate = itemView.findViewById(R.id.item_task_duedate);
+
             itemView.setOnClickListener(this);
         }
 

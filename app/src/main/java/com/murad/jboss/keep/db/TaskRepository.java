@@ -1,7 +1,7 @@
 package com.murad.jboss.keep.db;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.murad.jboss.keep.models.Task;

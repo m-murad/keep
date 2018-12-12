@@ -2,13 +2,13 @@ package com.murad.jboss.keep.fragments;
 
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +24,6 @@ import com.murad.jboss.keep.viewmodels.TaskViewModel;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link DialogFragment} subclass.
@@ -64,11 +62,11 @@ public class AddTaskFragment extends DialogFragment {
 
         setTitle();
 
-        taskTitle = ButterKnife.findById(dialog, R.id.task_title_et);
-        taskDescription = ButterKnife.findById(dialog, R.id.task_description_et);
-        DatePicker taskDueDatePicker = ButterKnife.findById(dialog, R.id.task_due_date_picker);
+        taskTitle = dialog.findViewById(R.id.task_title_et);
+        taskDescription = dialog.findViewById(R.id.task_description_et);
+        DatePicker taskDueDatePicker = dialog.findViewById(R.id.task_due_date_picker);
         taskDueDatePicker.setMinDate(System.currentTimeMillis() - 1000);
-        taskPrioritySpinner = ButterKnife.findById(dialog, R.id.task_priority_spinner);
+        taskPrioritySpinner = dialog.findViewById(R.id.task_priority_spinner);
 
         Calendar calendar = Calendar.getInstance();
         todayDate = calendar.getTime().getTime();
